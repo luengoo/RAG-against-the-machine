@@ -1,13 +1,14 @@
-import json
+from typing import List
 
-class MarkdownStrategy(paths):
-    paths = self.paths
-    
-    def chunker(self):
-        for path in self.paths:
-            try:
-                with open(path, encoding="utf-8") as file:
-                    data = json.load(file)
-                    for mark in data
-            except Exception:
-                print("Something went wrong")
+def chunker(file_text: str, max_chunk_size: int) -> List[str[tuple]]:
+    if "#" in file_text:
+        bla
+
+    else:
+        if len(file_text) <= max_chunk_size:
+            return_list = file_text(0, len(file_text))
+            return return_list
+        else:
+            for i in file_text:
+                return_list = file_text.split()
+
