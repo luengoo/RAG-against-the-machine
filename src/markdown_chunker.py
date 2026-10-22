@@ -1,31 +1,6 @@
 from typing import List, Tuple
-from chunking import merge_spans as merge
 
-
-def split_range(text: str, start: int, end: int,
-                max_size: int, level: int = 0) -> List[Tuple[int, int]]:
-    """Parte text[start:end] en rangos de como mucho max_size caracteres.
-
-    Usa primero los cortes del nivel `level` (encabezados) y, si algún
-    trozo sigue siendo demasiado grande, los del nivel siguiente.
-    """
-    if end - start <= max_size:
-        return [(start, end)]
-    if level >= len(FINDERS):
-        return [(i, min(i + max_size, end))
-                for i in range(start, end, max_size)]
-    cuts = FINDERS[level](text, start, end)
-    bounds = [start, *cuts, end]
-
-    result: List[Tuple[int, int]] = []
-    for a, b in zip(bounds, bounds[1:]):
-        if b - a <= max_size:
-            result.append((a, b))
-        else:
-            result.extend(
-                split_range(text, a, b, max_size, level + 1)
-            )
-    return result
+from src.splitting import Finder, split_range, merge_spans
 
 
 def header_cuts(text: str, start: int, end: int) -> List[int]:
@@ -78,4 +53,12 @@ def is_header(line: str) -> bool:
     return 1 <= n <= 6 and line[n:].startswith(" ")
 
 
-FINDERS = [header_cuts, paragraph_cuts, line_cuts]
+def chunk_markdown(text: str, max_size: int) -> List[Tuple[int, int]]:
+    """Trocea un texto Markdown en rangos de como mucho max_size caracteres."""
+    if not text.strip():
+        return []
+    spans = split_range(text, 0, len(text), max_size, MARKDOWN_FINDERS)
+    return merge_spans(spans, max_size)
+
+
+MARKDOWN_FINDERS: List[Finder] = [header_cuts, paragraph_cuts, line_cuts]

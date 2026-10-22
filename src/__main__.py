@@ -1,6 +1,6 @@
 import sys
 from io_utils import open_and_return
-from chunking import chunker
+from src.python_chunker import chunker
 
 
 def main():
