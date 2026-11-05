@@ -2,7 +2,7 @@ from collections import Counter
 from typing import Dict, List, Tuple
 import math
 
-from lexical import tokenize
+from src.lexical import tokenize
 
 Postings = Dict[str, List[Tuple[int, int]]]
 
