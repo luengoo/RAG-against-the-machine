@@ -2,7 +2,7 @@ from typing import List, Tuple
 import ast
 
 from src.splitting import Finder, split_range, merge_spans
-from src.markdown_chunker import paragraph_cuts, line_cuts
+from src.markdown_chunker import paragraph_cuts, line_cuts, TEXT_FINDERS
 
 
 def positions_finder(positions: List[int]) -> Finder:
@@ -54,7 +54,7 @@ def chunk_python(text: str, max_size: int) -> List[Tuple[int, int]]:
     try:
         tree = ast.parse(text)
     except (SyntaxError, ValueError):
-        finders = [paragraph_cuts, line_cuts]
+        finders = TEXT_FINDERS
     else:
         starts = line_starts(text)
         finders = [positions_finder(statement_starts(tree.body, starts)),

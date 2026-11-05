@@ -62,3 +62,4 @@ def chunk_markdown(text: str, max_size: int) -> List[Tuple[int, int]]:
 
 
 MARKDOWN_FINDERS: List[Finder] = [header_cuts, paragraph_cuts, line_cuts]
+TEXT_FINDERS: List[Finder] = [paragraph_cuts, line_cuts]
