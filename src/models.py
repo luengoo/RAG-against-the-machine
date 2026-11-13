@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict, Tuple
 from pydantic import BaseModel, Field
 import uuid
 
@@ -57,3 +57,10 @@ class StudentSearchResults(BaseModel):
 class StudentSearchResultsAndAnswer(BaseModel):
     search_results: List[MinimalAnswer]
     k: int
+
+
+class BM25Index(BaseModel):
+    max_chunk_size: int
+    chunks: List[Chunk]
+    postings: Dict[str, List[Tuple[int, int]]]
+    lengths: List[int]

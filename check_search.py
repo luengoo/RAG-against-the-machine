@@ -1,23 +1,13 @@
 """Prueba rápida: construir el índice y medir el recall@5."""
 
 import time
-from typing import Dict, List
 
 from src.bm25 import build_postings, search
 from src.corpus import chunk_corpus, scoring_text
 from src.evaluation import iou
 from src.lexical import tokenize
 from src.models import AnsweredQuestion, RagDataset
-
-
-def load_texts(paths: List[str]) -> Dict[str, str]:
-    """Lee cada fichero una sola vez: ruta -> texto completo."""
-    texts: Dict[str, str] = {}
-    for path in paths:
-        if path not in texts:
-            with open(path, encoding="utf-8") as f:
-                texts[path] = f.read()
-    return texts
+from src.indexer import load_texts
 
 
 def main() -> None:
