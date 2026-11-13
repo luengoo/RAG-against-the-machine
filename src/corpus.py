@@ -51,3 +51,8 @@ def chunk_corpus(raw_dir: str, max_size: int) -> List[Chunk]:
             continue
         chunks.extend(chunk_file(text, path, max_size))
     return chunks
+
+
+def scoring_text(chunk: Chunk, text: str) -> str:
+    """Texto que se tokeniza para puntuar un chunk: su ruta y su contenido."""
+    return f"{chunk.file_path}\n{text[chunk.start:chunk.end]}"
