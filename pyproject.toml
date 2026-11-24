@@ -8,7 +8,9 @@ dependencies = [
     "fire>=0.7.1",
     "numpy>=2.2.6",
     "pydantic>=2.14.1",
+    "torch>=2.14.1",
     "tqdm>=4.70.1",
+    "transformers>=5.20.2",
 ]
 
 [project.scripts]
@@ -23,3 +25,11 @@ dev = [
 
 [tool.uv]
 package = false
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }

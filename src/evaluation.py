@@ -1,4 +1,21 @@
+from typing import List
+
 from src.models import MinimalSource
+
+
+IOU_THRESHOLD = 0.05
+
+
+def question_recall(retrieved: List[MinimalSource],
+                    expected: List[MinimalSource], k: int) -> float:
+    """Fracción de las fuentes esperadas encontradas en los k primeros."""
+    if not expected:
+        return 0.0
+    found = sum(
+        any(iou(r, e) >= IOU_THRESHOLD for r in retrieved[:k])
+        for e in expected
+    )
+    return found / len(expected)
 
 
 def iou(a: MinimalSource, b: MinimalSource) -> float:
